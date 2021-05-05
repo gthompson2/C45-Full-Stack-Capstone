@@ -29,6 +29,7 @@ GO
 CREATE TABLE [Event] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [UserId] integer NOT NULL,
+  [Name] nvarchar (255) NOT NULL,
   [Date] datetime NOT NULL,
   [Address] nvarchar(255) NOT NULL,
   [Description] nvarchar(255),
@@ -37,14 +38,14 @@ CREATE TABLE [Event] (
 GO
 
 CREATE TABLE [EventGroup] (
-  [Id] int PRIMARY KEY,
+  [Id] int PRIMARY KEY identity NOT NULL,
   [UserId] int,
   [EventId] int
 )
 GO
 
 CREATE TABLE [Activity] (
-  [Id] int PRIMARY KEY,
+  [Id] int PRIMARY KEY identity NOT NULL,
   [Name] nvarchar(255)
 )
 GO

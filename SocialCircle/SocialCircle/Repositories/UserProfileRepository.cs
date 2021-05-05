@@ -16,10 +16,9 @@ namespace SocialCircle.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.Id, Up.FirebaseUserId, up.Name AS UserProfileName, up.Email, up.UserTypeId,
-                               ut.Name AS UserTypeName
+                        SELECT up.Id, up.FirebaseUserId, up.DisplayName, up.FirstName, 
+                               up.LastName, up.Email, up.CreateDateTime
                           FROM UserProfile up
-                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
                          WHERE FirebaseUserId = @FirebaseuserId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
@@ -33,14 +32,11 @@ namespace SocialCircle.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
-                            Name = DbUtils.GetString(reader, "UserProfileName"),
+                            DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                            FirstName = DbUtils.GetString(reader, "FirstName"),
+                            LastName = DbUtils.GetString(reader, "LastName"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
-                            UserType = new UserType()
-                            {
-                                Id = DbUtils.GetInt(reader, "UserTypeId"),
-                                Name = DbUtils.GetString(reader, "UserTypeName"),
-                            }
+                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
                         };
                     }
                     reader.Close();
@@ -57,13 +53,15 @@ namespace SocialCircle.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, Name, Email, UserTypeId)
+                    cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, DisplayName, FirstName, LastName, Email, CreateDateTime)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@FirebaseUserId, @Name, @Email, @UserTypeId)";
+                                        VALUES (@FirebaseUserId, @DisplayName, @FirstName, @LastName @Email, @CreateDateTime)";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
-                    DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@DisplayName", userProfile.DisplayName);
+                    DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
+                    DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@UserTypeId", userProfile.UserTypeId);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", userProfile.CreateDateTime);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }
