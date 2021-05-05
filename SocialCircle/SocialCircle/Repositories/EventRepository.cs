@@ -59,7 +59,7 @@ namespace SocialCircle.Repositories
                         SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
                                e.Description, e.ActivityId
                           FROM Event e
-                         WHERE p.Id = @id
+                         WHERE e.Id = @id
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -148,6 +148,15 @@ namespace SocialCircle.Repositories
             using (var conn = Connection)
             {
                 conn.Open();
+                // Delete all refrences to this event from EventGroup
+                // before deleting the event to avoid any FK restraints
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM EventGroup WHERE EventId = @eventId";
+                    DbUtils.AddParameter(cmd, "@eventId", id);
+                    cmd.ExecuteNonQuery();
+                }
+
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Event WHERE Id = @id";
@@ -168,7 +177,7 @@ namespace SocialCircle.Repositories
                         SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
                                e.Description, e.ActivityId
                           FROM Event e
-                         WHERE p.UserId = @userId
+                         WHERE e.UserId = @userId
                     ";
 
                     DbUtils.AddParameter(cmd, "@userId", userProfileId);
@@ -205,7 +214,7 @@ namespace SocialCircle.Repositories
                         SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
                                e.Description, e.ActivityId
                           FROM Event e
-                         WHERE p.ActivityId = @activityId
+                         WHERE e.ActivityId = @activityId
                     ";
 
                     DbUtils.AddParameter(cmd, "@activityId", activityId);

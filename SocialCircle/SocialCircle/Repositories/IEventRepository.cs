@@ -9,6 +9,7 @@ namespace SocialCircle.Repositories
         void Delete(int id);
         List<Event> GetAllEvents();
         Event GetEventById(int id);
+        List<Event> GetEventsByActivityId(int activityId);
         List<Event> GetEventsByUserProfileId(int userProfileId);
         void Update(Event eventObj);
     }

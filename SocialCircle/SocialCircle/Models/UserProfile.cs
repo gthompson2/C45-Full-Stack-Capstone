@@ -17,16 +17,21 @@ namespace SocialCircle.Models
 
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string LastName { get; set; }
 
         [Required]
         [MaxLength(255)]
         public string Email { get; set; }
 
-        [Required]
-        public int UserTypeId { get; set; }
-
-        public UserType UserType { get; set; }
+        public DateTime CreateDateTime { get; set; }
 
     }
 }

@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SocialCircle.Repositories;
 
 namespace SocialCircle
 {
@@ -28,6 +29,10 @@ namespace SocialCircle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IEventRepository, EventRepository>();
+            services.AddTransient<IEventGroupRepository, EventGroupRepository>();
+            services.AddTransient<IActivityRepository, ActivityRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
