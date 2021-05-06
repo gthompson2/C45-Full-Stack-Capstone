@@ -11,7 +11,7 @@ using SocialCircle.Repositories;
 
 namespace SocialCircle.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -38,6 +38,7 @@ namespace SocialCircle.Controllers
         {
             // All newly registered users start out as a "user" user type (i.e. they are not admins)
             //userProfile.UserTypeId = UserType.USER_TYPE_ID;
+            userProfile.CreateDateTime = DateTime.Now;
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseUserId }, userProfile);
