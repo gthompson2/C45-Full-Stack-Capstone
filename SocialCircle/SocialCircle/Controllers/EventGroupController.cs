@@ -12,7 +12,7 @@ namespace SocialCircle.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class EventGroupController : ControllerBase
     {
         private readonly IEventGroupRepository _eventGroupRepository;

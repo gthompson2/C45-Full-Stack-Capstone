@@ -55,7 +55,7 @@ namespace SocialCircle.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, DisplayName, FirstName, LastName, Email, CreateDateTime)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@FirebaseUserId, @DisplayName, @FirstName, @LastName @Email, @CreateDateTime)";
+                                        VALUES (@FirebaseUserId, @DisplayName, @FirstName, @LastName, @Email, @CreateDateTime)";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@DisplayName", userProfile.DisplayName);
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);

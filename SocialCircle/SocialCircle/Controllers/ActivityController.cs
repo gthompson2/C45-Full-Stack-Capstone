@@ -12,7 +12,7 @@ namespace SocialCircle.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ActivityController : ControllerBase
     {
         private readonly IActivityRepository _activityRepository;
