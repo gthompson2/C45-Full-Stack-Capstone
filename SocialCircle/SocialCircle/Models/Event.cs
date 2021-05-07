@@ -10,10 +10,12 @@ namespace SocialCircle.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public UserProfile UserProfile { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
         public int ActivityId { get; set; }
+        public Activity Activity { get; set; }
     }
 }

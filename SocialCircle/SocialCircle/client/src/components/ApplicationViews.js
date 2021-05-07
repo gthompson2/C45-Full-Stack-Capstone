@@ -5,6 +5,8 @@ import Login from "./Login/Login"
 import Register from "./Login/Register"
 import Hello from "./Hello";
 import "./appViews.css";
+import EventProvider from "../providers/EventProvider";
+import EventList from "./Events/EventList";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -23,6 +25,12 @@ export default function ApplicationViews() {
 
                 <Route path="/register">
                     <Register />
+                </Route>
+
+                <Route path="/events">
+                    <EventProvider>
+                        {isLoggedIn ? <EventList /> : <Redirect to="/login" />}
+                    </EventProvider>
                 </Route>
 
             </Switch>

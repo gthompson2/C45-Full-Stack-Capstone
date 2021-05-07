@@ -10,6 +10,7 @@ import {
     NavLink
 } from 'reactstrap';
 import { UserProfileContext } from "../providers/UserProfileProvider";
+
 export default function Header() {
     const { isLoggedIn, logout } = useContext(UserProfileContext);
     const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function Header() {
                             <>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                                    <NavLink tag={RRNavLink} to="/events">Events</NavLink>
                                 </NavItem>
                             </>
                         }
