@@ -11,6 +11,7 @@ namespace SocialCircle.Repositories
         Event GetEventById(int id);
         List<Event> GetEventsByActivityId(int activityId);
         List<Event> GetEventsByUserProfileId(int userProfileId);
+        List<Event> GetUserEventsByActivityId(int userProfileId, int activityId);
         void Update(Event eventObj);
     }
 }

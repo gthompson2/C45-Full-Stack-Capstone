@@ -21,9 +21,16 @@ namespace SocialCircle.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
-                               e.Description, e.ActivityId
+                        SELECT e.Id as EventId, e.UserId, e.Name as EventName, e.Date, e.Address, 
+                               e.Description, e.ActivityId,
+
+                               u.Id as UserProfileId, u.FireBaseUserId, u.DisplayName, u.FirstName,
+                               u.LastName, u.Email, u.CreateDateTime,
+
+                               a.Id as ActivityId, a.Name as Activity
                           FROM Event e
+                     LEFT JOIN UserProfile u ON e.UserId = u.Id
+                     LEFT JOIN Activity a ON e.ActivityId = a.Id
                          ORDER BY e.Date desc
                     ";
 
@@ -35,11 +42,25 @@ namespace SocialCircle.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "EventId"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "EventName"),
                             Date = DbUtils.GetDateTime(reader, "Date"),
                             Address = DbUtils.GetString(reader, "Address"),
                             Description = DbUtils.GetString(reader, "Description"),
-                            ActivityId = DbUtils.GetInt(reader, "ActivityId")
+                            ActivityId = DbUtils.GetInt(reader, "ActivityId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            },
+                            Activity = new Activity()
+                            {
+                                Id = DbUtils.GetInt(reader, "ActivityId"),
+                                Name = DbUtils.GetString(reader, "Activity")
+                            }
                         });
                     }
                     reader.Close();
@@ -56,9 +77,16 @@ namespace SocialCircle.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
-                               e.Description, e.ActivityId
+                        SELECT e.Id as EventId, e.UserId, e.Name as EventName, e.Date, e.Address, 
+                               e.Description, e.ActivityId,
+
+                               u.Id as UserProfileId, u.FireBaseUserId, u.DisplayName, u.FirstName,
+                               u.LastName, u.Email, u.CreateDateTime,
+
+                               a.Id as ActivityId, a.Name as Activity
                           FROM Event e
+                     LEFT JOIN UserProfile u ON e.UserId = u.Id
+                     LEFT JOIN Activity a ON e.ActivityId = a.Id
                          WHERE e.Id = @id
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -70,11 +98,25 @@ namespace SocialCircle.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "EventId"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "EventName"),
                             Date = DbUtils.GetDateTime(reader, "Date"),
                             Address = DbUtils.GetString(reader, "Address"),
                             Description = DbUtils.GetString(reader, "Description"),
-                            ActivityId = DbUtils.GetInt(reader, "ActivityId")
+                            ActivityId = DbUtils.GetInt(reader, "ActivityId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            },
+                            Activity = new Activity()
+                            {
+                                Id = DbUtils.GetInt(reader, "ActivityId"),
+                                Name = DbUtils.GetString(reader, "Activity")
+                            }
                         };
                     }
                     reader.Close();
@@ -174,9 +216,16 @@ namespace SocialCircle.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
-                               e.Description, e.ActivityId
+                        SELECT e.Id as EventId, e.UserId, e.Name as EventName, e.Date, e.Address, 
+                               e.Description, e.ActivityId,
+
+                               u.Id as UserProfileId, u.FireBaseUserId, u.DisplayName, u.FirstName,
+                               u.LastName, u.Email, u.CreateDateTime,
+
+                               a.Id as ActivityId, a.Name as Activity
                           FROM Event e
+                     LEFT JOIN UserProfile u ON e.UserId = u.Id
+                     LEFT JOIN Activity a ON e.ActivityId = a.Id
                          WHERE e.UserId = @userId
                     ";
 
@@ -190,11 +239,25 @@ namespace SocialCircle.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "EventId"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "EventName"),
                             Date = DbUtils.GetDateTime(reader, "Date"),
                             Address = DbUtils.GetString(reader, "Address"),
                             Description = DbUtils.GetString(reader, "Description"),
-                            ActivityId = DbUtils.GetInt(reader, "ActivityId")
+                            ActivityId = DbUtils.GetInt(reader, "ActivityId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            },
+                            Activity = new Activity()
+                            {
+                                Id = DbUtils.GetInt(reader, "ActivityId"),
+                                Name = DbUtils.GetString(reader, "Activity")
+                            }
                         });
                     }
                     reader.Close();
@@ -211,9 +274,16 @@ namespace SocialCircle.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT e.Id as EventId, e.UserId, e.Name, e.Date, e.Address, 
-                               e.Description, e.ActivityId
+                        SELECT e.Id as EventId, e.UserId, e.Name as EventName, e.Date, e.Address, 
+                               e.Description, e.ActivityId,
+
+                               u.Id as UserProfileId, u.FireBaseUserId, u.DisplayName, u.FirstName,
+                               u.LastName, u.Email, u.CreateDateTime,
+
+                               a.Id as ActivityId, a.Name as Activity
                           FROM Event e
+                     LEFT JOIN UserProfile u ON e.UserId = u.Id
+                     LEFT JOIN Activity a ON e.ActivityId = a.Id
                          WHERE e.ActivityId = @activityId
                     ";
 
@@ -227,11 +297,85 @@ namespace SocialCircle.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "EventId"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "EventName"),
                             Date = DbUtils.GetDateTime(reader, "Date"),
                             Address = DbUtils.GetString(reader, "Address"),
                             Description = DbUtils.GetString(reader, "Description"),
-                            ActivityId = DbUtils.GetInt(reader, "ActivityId")
+                            ActivityId = DbUtils.GetInt(reader, "ActivityId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            },
+                            Activity = new Activity()
+                            {
+                                Id = DbUtils.GetInt(reader, "ActivityId"),
+                                Name = DbUtils.GetString(reader, "Activity")
+                            }
+                        });
+                    }
+                    reader.Close();
+                    return events;
+                }
+            }
+        }
+
+        public List<Event> GetUserEventsByActivityId(int userProfileId, int activityId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT e.Id as EventId, e.UserId, e.Name as EventName, e.Date, e.Address, 
+                               e.Description, e.ActivityId,
+
+                               u.Id as UserProfileId, u.FireBaseUserId, u.DisplayName, u.FirstName,
+                               u.LastName, u.Email, u.CreateDateTime,
+
+                               a.Id as ActivityId, a.Name as Activity
+                          FROM Event e
+                     LEFT JOIN UserProfile u ON e.UserId = u.Id
+                     LEFT JOIN Activity a ON e.ActivityId = a.Id
+                         WHERE e.ActivityId = @activityId AND e.UserId = @userId
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@activityId", activityId);
+                    DbUtils.AddParameter(cmd, "@userId", userProfileId);
+
+
+                    var reader = cmd.ExecuteReader();
+                    var events = new List<Event>();
+                    while (reader.Read())
+                    {
+                        events.Add(new Event()
+                        {
+                            Id = DbUtils.GetInt(reader, "EventId"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
+                            Name = DbUtils.GetString(reader, "EventName"),
+                            Date = DbUtils.GetDateTime(reader, "Date"),
+                            Address = DbUtils.GetString(reader, "Address"),
+                            Description = DbUtils.GetString(reader, "Description"),
+                            ActivityId = DbUtils.GetInt(reader, "ActivityId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            },
+                            Activity = new Activity()
+                            {
+                                Id = DbUtils.GetInt(reader, "ActivityId"),
+                                Name = DbUtils.GetString(reader, "Activity")
+                            }
                         });
                     }
                     reader.Close();

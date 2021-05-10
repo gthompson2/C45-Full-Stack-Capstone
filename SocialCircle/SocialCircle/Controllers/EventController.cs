@@ -12,7 +12,7 @@ namespace SocialCircle.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EventController : ControllerBase
     {
         private readonly IEventRepository _eventRepository;
@@ -87,6 +87,19 @@ namespace SocialCircle.Controllers
         public IActionResult EventsByActivity(int id)
         {
             var events = _eventRepository.GetEventsByActivityId(id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            return Ok(events);
+        }
+
+        // http://localhost:5001/api/event/MyEvents/2/4
+
+        [HttpGet("MyEventsByActivity/{userId}/{activityId}")]
+        public IActionResult UserEventsByActivity(int userId, int activityId)
+        {
+            var events = _eventRepository.GetUserEventsByActivityId(userId, activityId);
             if (events == null)
             {
                 return NotFound();
