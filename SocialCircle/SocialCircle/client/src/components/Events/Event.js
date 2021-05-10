@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./Event.css";
 
 export const Event = ({ event }) => {
+    console.log("Event is triggered")
 
     const user = JSON.parse(sessionStorage.getItem("userProfile"));
 

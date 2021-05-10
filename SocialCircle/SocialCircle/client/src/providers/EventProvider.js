@@ -6,7 +6,7 @@ export const EventContext = React.createContext();
 export const PostProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
-    //const [upcomingEvents, setUpcomingEvents] = useState([]);
+    const [myEvents, setMyEvents] = useState([]);
     const [event, setEvent] = useState({});
 
     const getAllEvents = () => {
@@ -31,7 +31,8 @@ export const PostProvider = (props) => {
                     Authorization: `Bearer ${token}`,
                 },
             }).then((res) => res.json())
-        );
+        )
+            .then(setEvent)
     }
 
     // fetching filtered posts belonging to the current user
@@ -46,7 +47,7 @@ export const PostProvider = (props) => {
                     },
                 }).then((resp) => resp.json())
             )
-            .then(setEvents);
+            .then(setMyEvents);
     }
 
     const getEventsByActivity = (activityId) => {
@@ -60,6 +61,22 @@ export const PostProvider = (props) => {
                 }).then((resp) => resp.json())
             )
             .then(setEvents);
+    }
+    const getMyEventsByActivity = (userId, activityId) => {
+        console.log("provider userId: ", userId)
+        console.log("provider activityId: ", activityId)
+        return getToken()
+            .then((token) =>
+                fetch(`/api/event/MyEventsByActivity/${userId}/${activityId}`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }).then((resp) => resp.json())
+            )
+            .then(setMyEvents)
+            .then(console.log("Events: ", events))
+            .then(console.log("My Events: ", myEvents))
     }
 
     const addEvent = (eventObj) => {
@@ -109,9 +126,11 @@ export const PostProvider = (props) => {
                 getAllEvents,
                 event,
                 getEventById,
+                myEvents,
                 getMyEvents,
                 setEvent,
                 getEventsByActivity,
+                getMyEventsByActivity,
                 addEvent,
                 editEvent,
                 deleteEvent

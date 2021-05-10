@@ -7,6 +7,7 @@ import Hello from "./Hello";
 import "./appViews.css";
 import EventProvider from "../providers/EventProvider";
 import EventList from "./Events/EventList";
+import MyEventList from "./Events/MyEventList";
 import ActivityProvider from "../providers/ActivityProvider";
 
 export default function ApplicationViews() {
@@ -32,6 +33,14 @@ export default function ApplicationViews() {
                     <EventProvider>
                         <ActivityProvider>
                             {isLoggedIn ? <EventList /> : <Redirect to="/login" />}
+                        </ActivityProvider>
+                    </EventProvider>
+                </Route>
+
+                <Route path="/myEvents">
+                    <EventProvider>
+                        <ActivityProvider>
+                            {isLoggedIn ? <MyEventList /> : <Redirect to="/login" />}
                         </ActivityProvider>
                     </EventProvider>
                 </Route>
