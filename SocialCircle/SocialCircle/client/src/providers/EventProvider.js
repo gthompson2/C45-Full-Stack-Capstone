@@ -6,6 +6,7 @@ export const EventContext = React.createContext();
 export const PostProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
+    //const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [event, setEvent] = useState({});
 
     const getAllEvents = () => {
