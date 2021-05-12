@@ -21,9 +21,6 @@ export const MyEventList = () => {
     const filterEventsByActivity = (event) => {
         const activityId = parseInt(event)
         if (activityId !== 0) {
-            console.log("getMyEventsByActivity was reached")
-            console.log("activityId: ", activityId)
-            console.log("userId: ", userId)
             getMyEventsByActivity(userId, activityId)
         } else {
             getMyEvents(userId)
@@ -49,7 +46,7 @@ export const MyEventList = () => {
                     })}
                 </div>
                 <div>
-                    <Button color="success" to="/event/host">Host Event</Button>
+                    <Button color="success" href="/events/add">Host Event</Button>
                 </div>
             </div>
         </div>

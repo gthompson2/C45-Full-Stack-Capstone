@@ -7,7 +7,7 @@ export const PostProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
     const [myEvents, setMyEvents] = useState([]);
-    const [event, setEvent] = useState({});
+    const [eventObj, setEvent] = useState({});
 
     const getAllEvents = () => {
         //the proxy that was set up in package.json will be handling the first part of the URL
@@ -63,8 +63,6 @@ export const PostProvider = (props) => {
             .then(setEvents);
     }
     const getMyEventsByActivity = (userId, activityId) => {
-        console.log("provider userId: ", userId)
-        console.log("provider activityId: ", activityId)
         return getToken()
             .then((token) =>
                 fetch(`/api/event/MyEventsByActivity/${userId}/${activityId}`, {
@@ -75,8 +73,6 @@ export const PostProvider = (props) => {
                 }).then((resp) => resp.json())
             )
             .then(setMyEvents)
-            .then(console.log("Events: ", events))
-            .then(console.log("My Events: ", myEvents))
     }
 
     const addEvent = (eventObj) => {
@@ -124,7 +120,7 @@ export const PostProvider = (props) => {
             value={{
                 events,
                 getAllEvents,
-                event,
+                eventObj,
                 getEventById,
                 myEvents,
                 getMyEvents,
