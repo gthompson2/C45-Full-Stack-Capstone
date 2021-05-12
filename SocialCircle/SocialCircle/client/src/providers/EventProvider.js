@@ -76,8 +76,6 @@ export const PostProvider = (props) => {
     }
 
     const addEvent = (eventObj) => {
-        console.log("addEvent has been activated: ", eventObj)
-        console.log(JSON.stringify(eventObj))
         return getToken().then((token) =>
             fetch("/api/event", {
                 method: "POST",

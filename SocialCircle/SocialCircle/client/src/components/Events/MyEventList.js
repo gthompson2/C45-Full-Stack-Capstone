@@ -21,9 +21,6 @@ export const MyEventList = () => {
     const filterEventsByActivity = (event) => {
         const activityId = parseInt(event)
         if (activityId !== 0) {
-            console.log("getMyEventsByActivity was reached")
-            console.log("activityId: ", activityId)
-            console.log("userId: ", userId)
             getMyEventsByActivity(userId, activityId)
         } else {
             getMyEvents(userId)

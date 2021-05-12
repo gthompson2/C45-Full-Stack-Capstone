@@ -54,7 +54,6 @@ export const EventForm = () => {
 
     const saveEvent = (e) => {
         e.preventDefault();
-        console.log("saveEvent event: ", e)
 
         // User input must be tested for bad values before being sent to the API
         const day = eventObj.day;
