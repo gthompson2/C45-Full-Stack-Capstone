@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { EventContext } from "../../providers/EventProvider";
 import "./Event.css";
 
 export const Event = ({ event }) => {
+
+    const { deleteEvent } = useContext(EventContext);
 
     const user = JSON.parse(sessionStorage.getItem("userProfile"));
 
     const enableButton = user !== null && user.id === event.userId;
 
     const isCompleted = Date.parse(event.date) < (Date.now())
+
+    const history = useHistory();
 
     const buttonForUser = () => {
         return (
@@ -22,13 +28,7 @@ export const Event = ({ event }) => {
     };
 
     const deleteForUser = () => {
-        return (
-            <Button className="b">
-                <Link className="a" to={`/events/delete/${event.id}`}>
-                    Delete
-            </Link>
-            </Button>
-        );
+        deleteEvent(event.id)
     };
 
     return (
@@ -50,7 +50,11 @@ export const Event = ({ event }) => {
                 <p>Address: {event.address}</p>
                 <section className="c">
                     <div>{enableButton ? buttonForUser() : null}</div>
-                    <div>{enableButton ? deleteForUser() : null}</div>
+                    <div>{enableButton ? <Button className="b">
+                        <Link className="a" to={`/events/delete/${event.id}`}>
+                            Delete
+                                            </Link>
+                    </Button> : null}</div>
                 </section>
                 <section className="d">
                     <strong>{isCompleted ? `Completed` : ``}</strong>

@@ -114,6 +114,7 @@ export const EventProvider = (props) => {
     }
 
     const deleteEvent = (id) => {
+        console.log("The deleteEvent method was called")
         return getToken()
             .then((token) =>
                 fetch(`/api/event/${id}`, {
@@ -122,7 +123,6 @@ export const EventProvider = (props) => {
                         Authorization: `Bearer ${token}`,
                     }
                 })
-                    .then(getAllEvents)
             )
     }
 
