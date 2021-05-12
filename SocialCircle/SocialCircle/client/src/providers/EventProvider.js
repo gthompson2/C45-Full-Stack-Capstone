@@ -3,7 +3,7 @@ import { UserProfileContext } from "./UserProfileProvider";
 
 export const EventContext = React.createContext();
 
-export const PostProvider = (props) => {
+export const EventProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
     const [myEvents, setMyEvents] = useState([]);
@@ -148,4 +148,4 @@ export const PostProvider = (props) => {
         </EventContext.Provider>
     )
 }
-export default PostProvider;
+export default EventProvider;
