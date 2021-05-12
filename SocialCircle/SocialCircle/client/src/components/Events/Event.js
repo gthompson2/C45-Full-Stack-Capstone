@@ -39,7 +39,7 @@ export const Event = ({ event }) => {
             </p>
             <CardBody>
                 <p>
-                    <Link to={`/event/${event.id}`}>
+                    <Link to={`/events/${event.id}`}>
                         <strong>{event.name}</strong>
                     </Link>
                 </p>

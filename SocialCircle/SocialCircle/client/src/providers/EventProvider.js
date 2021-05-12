@@ -35,6 +35,17 @@ export const PostProvider = (props) => {
             .then(setEvent)
     }
 
+    const getEventToEdit = (id) => {
+        return getToken().then((token) =>
+            fetch(`/api/event/${id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.json())
+        )
+    }
+
     // fetching filtered posts belonging to the current user
     // using the user's Id
     const getMyEvents = (userId) => {
@@ -122,6 +133,7 @@ export const PostProvider = (props) => {
                 getAllEvents,
                 eventObj,
                 getEventById,
+                getEventToEdit,
                 myEvents,
                 getMyEvents,
                 setEvent,

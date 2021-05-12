@@ -9,6 +9,7 @@ import EventProvider from "../providers/EventProvider";
 import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";
 import EventForm from "./Events/EventForm";
+import EventDetails from "./Events/EventDetails";
 import ActivityProvider from "../providers/ActivityProvider";
 
 export default function ApplicationViews() {
@@ -43,6 +44,12 @@ export default function ApplicationViews() {
                         <ActivityProvider>
                             {isLoggedIn ? <MyEventList /> : <Redirect to="/login" />}
                         </ActivityProvider>
+                    </EventProvider>
+                </Route>
+
+                <Route path="/events/:id(\d+)" exact>
+                    <EventProvider>
+                        {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
                     </EventProvider>
                 </Route>
 
