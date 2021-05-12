@@ -10,7 +10,8 @@ import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";
 import EventForm from "./Events/EventForm";
 import EventDetails from "./Events/EventDetails";
-import ActivityProvider from "../providers/ActivityProvider";
+import ActivityProvider, { ActivityContext } from "../providers/ActivityProvider";
+import EventGroupProvider from "../providers/EventGroupProvider";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -49,7 +50,11 @@ export default function ApplicationViews() {
 
                 <Route path="/events/:id(\d+)" exact>
                     <EventProvider>
-                        {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
+                        <ActivityProvider>
+                            <EventGroupProvider>
+                                {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
+                            </EventGroupProvider>
+                        </ActivityProvider>
                     </EventProvider>
                 </Route>
 

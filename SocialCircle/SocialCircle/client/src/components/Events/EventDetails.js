@@ -1,16 +1,31 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Card, CardImg, CardBody, Button } from "reactstrap";
 import { EventContext } from "../../providers/EventProvider";
-import { useParams, Link } from "react-router-dom";
+import { EventGroupContext } from "../../providers/EventGroupProvider";
+import { useParams, Link, useHistory } from "react-router-dom";
 
 export const EventDetails = () => {
     const { eventObj, getEventById } = useContext(EventContext);
+    const { eventGroups, getEventGroupsByEvent, addEventGroup, deleteEventGroup } = useContext(EventGroupContext);
+
+    const history = useHistory();
 
     const { id } = useParams();
 
     const user = JSON.parse(sessionStorage.getItem("userProfile"));
 
     const enableButton = user !== null && user.id === eventObj.userId;
+
+    let isRSVPd = null
+
+    console.log(eventGroups)
+
+    eventGroups.filter((eventGroup) => {
+        console.log("EventGroup durign fitler: ", eventGroup)
+        if (eventGroup.userId === user.id) {
+            isRSVPd = eventGroup.id
+        }
+    })
 
     const isCompleted = Date.parse(eventObj.date < Date.now())
 
@@ -34,10 +49,32 @@ export const EventDetails = () => {
         );
     };
 
+
+    const addAnEventGroup = (eventGroupObj) => {
+        console.log("EventGroup to add: ", eventGroupObj)
+        addEventGroup(eventGroupObj)
+            .then(history.go())
+    }
+
+    const deleteAnEventGroup = (groupId) => {
+        console.log("Delete event group activiated")
+        console.log("groupId: ", groupId)
+        deleteEventGroup(groupId)
+            .then(history.go())
+
+
+    }
+
     useEffect(() => {
         console.log(id)
         getEventById(parseInt(id))
             .then(console.log("Event Object: ", eventObj))
+        getEventGroupsByEvent(parseInt(id))
+            .then(console.log("Event Groups: ", eventGroups))
+    }, []);
+
+    useEffect(() => {
+        getEventGroupsByEvent(parseInt(id))
     }, []);
 
     return (
@@ -57,7 +94,10 @@ export const EventDetails = () => {
                 <p>Description: {eventObj.description}</p>
                 <section>
                     {/* RSVPs go here */}
-                    <p>RSVPs:</p>
+                    <p>RSVPs: {eventGroups.length}</p>
+                    <div>{isRSVPd ? <Button className="b" color="danger" onClick={() => { deleteAnEventGroup(isRSVPd) }}>Cancel RSVP</Button>
+                        : <Button className="b" onClick={() => { addAnEventGroup({ userId: user.id, eventId: parseInt(id) }) }}>RSVP</Button>}
+                    </div>
                 </section>
                 <section className="c">
                     <div>{enableButton ? buttonForUser() : null}</div>
