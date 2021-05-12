@@ -8,6 +8,7 @@ import "./appViews.css";
 import EventProvider from "../providers/EventProvider";
 import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";
+import EventForm from "./Events/EventForm";
 import ActivityProvider from "../providers/ActivityProvider";
 
 export default function ApplicationViews() {
@@ -29,7 +30,7 @@ export default function ApplicationViews() {
                     <Register />
                 </Route>
 
-                <Route path="/events">
+                <Route path="/events" exact>
                     <EventProvider>
                         <ActivityProvider>
                             {isLoggedIn ? <EventList /> : <Redirect to="/login" />}
@@ -37,13 +38,34 @@ export default function ApplicationViews() {
                     </EventProvider>
                 </Route>
 
-                <Route path="/myEvents">
+                <Route path="/myEvents" exact>
                     <EventProvider>
                         <ActivityProvider>
                             {isLoggedIn ? <MyEventList /> : <Redirect to="/login" />}
                         </ActivityProvider>
                     </EventProvider>
                 </Route>
+
+                <Route path="/events/add" exact>
+                    <EventProvider>
+                        <ActivityProvider>
+                            {isLoggedIn ? <EventForm /> : <Redirect to="/login" />}
+                        </ActivityProvider>
+                    </EventProvider>
+
+                </Route>
+
+                <Route path="/events/edit/:id(\d+)" exact>
+                    <EventProvider>
+                        <ActivityProvider>
+                            {isLoggedIn ? <EventForm /> : <Redirect to="/login" />}
+                        </ActivityProvider>
+                    </EventProvider>
+                </Route>
+
+                {/* <Route exact path="/events/delete/:id(\d+)">
+                    <EventDelete />
+                </Route> */}
 
             </Switch>
         </main>

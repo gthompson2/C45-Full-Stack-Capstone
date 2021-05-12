@@ -49,7 +49,7 @@ export const MyEventList = () => {
                     })}
                 </div>
                 <div>
-                    <Button color="success" to="/event/host">Host Event</Button>
+                    <Button color="success" href="/events/add">Host Event</Button>
                 </div>
             </div>
         </div>

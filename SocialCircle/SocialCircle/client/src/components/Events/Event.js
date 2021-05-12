@@ -15,7 +15,7 @@ export const Event = ({ event }) => {
     const buttonForUser = () => {
         return (
             <Button className="b">
-                <Link className="a" to={`/event/edit/${event.id}`}>
+                <Link className="a" to={`/events/edit/${event.id}`}>
                     Edit
             </Link>
             </Button>
@@ -25,7 +25,7 @@ export const Event = ({ event }) => {
     const deleteForUser = () => {
         return (
             <Button className="b">
-                <Link className="a" to={`/event/delete/${event.id}`}>
+                <Link className="a" to={`/events/delete/${event.id}`}>
                     Delete
             </Link>
             </Button>
@@ -46,7 +46,8 @@ export const Event = ({ event }) => {
                 </p>
                 <p>Host: {event.userProfile.displayName}</p>
                 <p>Activity: {event.activity.name}</p>
-                <p>Date: {event.date}</p>
+                <p>Date: {new Date(event.date).toLocaleDateString('en-US')}</p>
+                <p>Time: {new Date(event.date).toLocaleTimeString('en-US')}</p>
                 <p>Address: {event.address}</p>
                 <section className="c">
                     <div>{enableButton ? buttonForUser() : null}</div>
