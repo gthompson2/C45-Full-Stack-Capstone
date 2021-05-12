@@ -9,7 +9,7 @@ export const Event = ({ event }) => {
 
     const enableButton = user !== null && user.id === event.userId;
 
-    const isCompleted = Date.parse(event.date < Date.now())
+    const isCompleted = Date.parse(event.date) < (Date.now())
 
     const buttonForUser = () => {
         return (
@@ -53,7 +53,7 @@ export const Event = ({ event }) => {
                     <div>{enableButton ? deleteForUser() : null}</div>
                 </section>
                 <section className="d">
-                    <h4>{isCompleted ? `Completed` : ``}</h4>
+                    <strong>{isCompleted ? `Completed` : ``}</strong>
                 </section>
             </CardBody>
         </Card>

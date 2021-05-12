@@ -57,6 +57,7 @@ export const EventDetails = () => {
                 <p>Description: {eventObj.description}</p>
                 <section>
                     {/* RSVPs go here */}
+                    <p>RSVPs:</p>
                 </section>
                 <section className="c">
                     <div>{enableButton ? buttonForUser() : null}</div>

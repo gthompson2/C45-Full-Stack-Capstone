@@ -98,7 +98,7 @@ export const EventForm = () => {
                     name: eventObj.name
 
                     // User is returned to the event details page
-                }).then(() => history.push(`/events/${eventId}`))
+                }).then(() => history.push(`/myEvents`))
 
                 // If eventId is null, the user is creating an event
             } else {
