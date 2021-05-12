@@ -18,10 +18,8 @@ export const EventDetails = () => {
 
     let isRSVPd = null
 
-    console.log(eventGroups)
 
     eventGroups.filter((eventGroup) => {
-        console.log("EventGroup durign fitler: ", eventGroup)
         if (eventGroup.userId === user.id) {
             isRSVPd = eventGroup.id
         }
@@ -51,14 +49,11 @@ export const EventDetails = () => {
 
 
     const addAnEventGroup = (eventGroupObj) => {
-        console.log("EventGroup to add: ", eventGroupObj)
         addEventGroup(eventGroupObj)
             .then(history.go())
     }
 
     const deleteAnEventGroup = (groupId) => {
-        console.log("Delete event group activiated")
-        console.log("groupId: ", groupId)
         deleteEventGroup(groupId)
             .then(history.go())
 
@@ -66,11 +61,8 @@ export const EventDetails = () => {
     }
 
     useEffect(() => {
-        console.log(id)
         getEventById(parseInt(id))
-            .then(console.log("Event Object: ", eventObj))
         getEventGroupsByEvent(parseInt(id))
-            .then(console.log("Event Groups: ", eventGroups))
     }, []);
 
     useEffect(() => {
@@ -80,20 +72,16 @@ export const EventDetails = () => {
     return (
         <Card className="m-4">
             <p className="text-left px-2">
-                {/* Hosted by: {eventObj.userProfile.displayName} */}
-                {/* This won't work unless we modify the API to include userProfile with Events */}
             </p>
             <CardBody>
                 <p>
                     <strong>{eventObj.name}</strong>
                 </p>
-                {/* <p>Activity: {eventObj.activity.name}</p> */}
                 <p>Date: {new Date(eventObj.date).toLocaleDateString('en-US')}</p>
                 <p>Time: {new Date(eventObj.date).toLocaleTimeString('en-US')}</p>
                 <p>Address: {eventObj.address}</p>
                 <p>Description: {eventObj.description}</p>
                 <section>
-                    {/* RSVPs go here */}
                     <p>RSVPs: {eventGroups.length}</p>
                     <div>{isRSVPd ? <Button className="b" color="danger" onClick={() => { deleteAnEventGroup(isRSVPd) }}>Cancel RSVP</Button>
                         : <Button className="b" onClick={() => { addAnEventGroup({ userId: user.id, eventId: parseInt(id) }) }}>RSVP</Button>}

@@ -141,16 +141,11 @@ export const EventForm = () => {
         if (eventId) {
             getEventToEdit(eventId)
                 .then((eventObj) => {
-                    console.log(".then eventObj: ", eventObj)
                     // This zombie code still needs testing
                     // Need to convert the current dateTime format to a locale string and then split
                     const dateFormat = (Date.parse(eventObj.date))
                     const dateFormat2 = (new Date(dateFormat)).toLocaleString('en-US')
-                    console.log("dateFormat: ", dateFormat)
-                    console.log("dateFormat2: ", dateFormat2)
                     const [initDay, initTime] = dateFormat2.split(",")
-                    console.log("initDay: ", initDay)
-                    console.log("initTime: ", initTime)
                     eventObj.day = initDay
                     eventObj.time = initTime
                     setEvent(eventObj);

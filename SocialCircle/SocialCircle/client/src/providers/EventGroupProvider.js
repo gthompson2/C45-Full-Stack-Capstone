@@ -20,7 +20,6 @@ export const EventGroupProvider = (props) => {
     }
 
     const addEventGroup = (eventGroupObj) => {
-        console.log("EventGroup at provider: ", eventGroupObj)
         return getToken().then((token) =>
             fetch(`/api/eventGroup/`, {
                 method: "POST",
