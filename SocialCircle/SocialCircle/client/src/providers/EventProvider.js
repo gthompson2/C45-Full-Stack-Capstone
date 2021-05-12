@@ -3,7 +3,7 @@ import { UserProfileContext } from "./UserProfileProvider";
 
 export const EventContext = React.createContext();
 
-export const PostProvider = (props) => {
+export const EventProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [events, setEvents] = useState([]);
     const [myEvents, setMyEvents] = useState([]);
@@ -33,6 +33,17 @@ export const PostProvider = (props) => {
             }).then((res) => res.json())
         )
             .then(setEvent)
+    }
+
+    const getEventToEdit = (id) => {
+        return getToken().then((token) =>
+            fetch(`/api/event/${id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.json())
+        )
     }
 
     // fetching filtered posts belonging to the current user
@@ -111,7 +122,6 @@ export const PostProvider = (props) => {
                         Authorization: `Bearer ${token}`,
                     }
                 })
-                    .then(getAllEvents)
             )
     }
 
@@ -122,6 +132,7 @@ export const PostProvider = (props) => {
                 getAllEvents,
                 eventObj,
                 getEventById,
+                getEventToEdit,
                 myEvents,
                 getMyEvents,
                 setEvent,
@@ -136,4 +147,4 @@ export const PostProvider = (props) => {
         </EventContext.Provider>
     )
 }
-export default PostProvider;
+export default EventProvider;

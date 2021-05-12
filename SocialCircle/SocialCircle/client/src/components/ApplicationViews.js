@@ -9,7 +9,10 @@ import EventProvider from "../providers/EventProvider";
 import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";
 import EventForm from "./Events/EventForm";
-import ActivityProvider from "../providers/ActivityProvider";
+import EventDetails from "./Events/EventDetails";
+import ActivityProvider, { ActivityContext } from "../providers/ActivityProvider";
+import EventGroupProvider from "../providers/EventGroupProvider";
+import EventDelete from "./Events/EventDelete";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -46,6 +49,16 @@ export default function ApplicationViews() {
                     </EventProvider>
                 </Route>
 
+                <Route path="/events/:id(\d+)" exact>
+                    <EventProvider>
+                        <ActivityProvider>
+                            <EventGroupProvider>
+                                {isLoggedIn ? <EventDetails /> : <Redirect to="/login" />}
+                            </EventGroupProvider>
+                        </ActivityProvider>
+                    </EventProvider>
+                </Route>
+
                 <Route path="/events/add" exact>
                     <EventProvider>
                         <ActivityProvider>
@@ -63,9 +76,11 @@ export default function ApplicationViews() {
                     </EventProvider>
                 </Route>
 
-                {/* <Route exact path="/events/delete/:id(\d+)">
-                    <EventDelete />
-                </Route> */}
+                <Route exact path="/events/delete/:id(\d+)">
+                    <EventProvider>
+                        {isLoggedIn ? <EventDelete /> : <Redirect to="/login" />}
+                    </EventProvider>
+                </Route>
 
             </Switch>
         </main>

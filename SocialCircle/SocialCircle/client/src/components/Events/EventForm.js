@@ -15,7 +15,7 @@ import { useHistory, useParams } from "react-router-dom";
 // Both Create and Edit routes to this form
 export const EventForm = () => {
 
-    const { addEvent, editEvent, getEvent } = useContext(EventContext);
+    const { addEvent, editEvent, getEventToEdit } = useContext(EventContext);
     const { activities, getAllActivities } = useContext(ActivityContext); // Needed for Activity select
 
     const history = useHistory();
@@ -98,7 +98,7 @@ export const EventForm = () => {
                     name: eventObj.name
 
                     // User is returned to the event details page
-                }).then(() => history.push(`/myEvents/${eventId}`))
+                }).then(() => history.push(`/myEvents`))
 
                 // If eventId is null, the user is creating an event
             } else {
@@ -139,14 +139,17 @@ export const EventForm = () => {
     useEffect(() => {
         getAllActivities();
         if (eventId) {
-            getEvent(eventId).then((eventObj) => {
-                // This zombie code still needs testing
-
-                // const [initDay, initTime, initPeriod] = (eventObj.date).split(" ")
-                // eventObj.day = initDay
-                // eventObj.time = (`${initTime} ${initPeriod}`)
-                setEvent(eventObj);
-            });
+            getEventToEdit(eventId)
+                .then((eventObj) => {
+                    // This zombie code still needs testing
+                    // Need to convert the current dateTime format to a locale string and then split
+                    const dateFormat = (Date.parse(eventObj.date))
+                    const dateFormat2 = (new Date(dateFormat)).toLocaleString('en-US')
+                    const [initDay, initTime] = dateFormat2.split(",")
+                    eventObj.day = initDay
+                    eventObj.time = initTime
+                    setEvent(eventObj);
+                });
         }
     }, []);
 
@@ -257,6 +260,7 @@ export const EventForm = () => {
                         <Button color="info" onClick={saveEvent}>
                             {eventId ? <> Save Changes </> : <>Add Event</>}
                         </Button>
+                        <Button color="danger" href='/myEvents/'>Cancel</Button>
                     </CardBody>
                 </Card>
             </div>
