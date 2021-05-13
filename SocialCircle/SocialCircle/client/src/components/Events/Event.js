@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { EventContext } from "../../providers/EventProvider";
@@ -9,14 +8,15 @@ export const Event = ({ event }) => {
 
     const { deleteEvent } = useContext(EventContext);
 
+    // need the user data to determine whether or not the current user created the
+    // event; if so, edit and delete buttons are enabled
     const user = JSON.parse(sessionStorage.getItem("userProfile"));
-
     const enableButton = user !== null && user.id === event.userId;
 
     const isCompleted = Date.parse(event.date) < (Date.now())
 
-    const history = useHistory();
-
+    // edit button is provided here; delete button is located in the JSX 
+    // in a ternary, and routes to a confirmation page
     const buttonForUser = () => {
         return (
             <Button className="b">
@@ -27,15 +27,9 @@ export const Event = ({ event }) => {
         );
     };
 
-    const deleteForUser = () => {
-        deleteEvent(event.id)
-    };
-
     return (
         <Card className="m-4">
             <p className="text-left px-2">
-                {/* Posted by: {event.userProfile.displayName}  */}
-                {/* This won't work unless we modify the API to include userProfile with Events */}
             </p>
             <CardBody>
                 <p>

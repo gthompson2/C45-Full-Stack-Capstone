@@ -4,16 +4,20 @@ import { EventContext } from "../../providers/EventProvider";
 import { useParams, Link, useHistory } from "react-router-dom";
 
 export const EventDelete = () => {
+    // get the entire event object so that the event's name can be used
+    // in the confirmation message
     const { eventObj, getEventById, deleteEvent } = useContext(EventContext);
 
     const history = useHistory();
 
     const eventId = parseInt(useParams().id);
 
+    // object is retrieved using the id in the route parameters
     useEffect(() => {
         getEventById(eventId);
     }, [])
 
+    // after the event is deleted, users are routed to a list of events they are hosting
     const deletion = () => {
         deleteEvent(eventObj.id)
             .then(() => {

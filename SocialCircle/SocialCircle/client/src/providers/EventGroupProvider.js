@@ -41,7 +41,7 @@ export const EventGroupProvider = (props) => {
                         Authorization: `Bearer ${token}`,
                     }
                 })
-            ) // getEventGroupsByEvent() needs to be called after this
+            )
     }
 
     return (
