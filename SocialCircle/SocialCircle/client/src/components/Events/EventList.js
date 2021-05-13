@@ -4,19 +4,22 @@ import { ActivityContext } from "../../providers/ActivityProvider";
 import Event from "./Event";
 
 export const EventList = () => {
+    // EventList displays all events in the database, and allows them to be filtered
+    // activity type
     const { events, getAllEvents, getEventsByActivity } = useContext(EventContext);
     const { activities, getAllActivities } = useContext(ActivityContext);
-
 
     useEffect(() => {
         getAllEvents()
             .then(getAllActivities())
     }, []);
 
-    // useEffect(() => {
-
-    // }, [filteredEvents])
-
+    /**
+     * On initial page load, the activity filter select is set to an option with a value of 0,
+     * which bypasses the activity filter entirely. Each time the select is changed, this 
+     * method is called. If the id of the option selected corresponds to the id of an Activity,
+     * the events are filtered based on that activity. Otherwise, all events are returned
+     */
     const filterEventsByActivity = (event) => {
         const activityId = parseInt(event)
         if (activityId !== 0) {
@@ -26,30 +29,6 @@ export const EventList = () => {
         }
 
     }
-
-    /**
-     * 
-     * TODO: filter events based on if they are set to take place before or after the current date/time
-     * 
-     * To transfer date from string format to milliseconds, use Date.parse(<dateObj>)
-     * To transfer date from milliseconds to string format, use <dateObj>.toLocaleString()
-     * 
-     * For each event, transfer the date to milliseconds and compare it to Date.now()
-     * 
-     * 1: When the page loads, dateFilter is assigned a value of 0
-     * 2: When the date dropdown is changed, changeDateFilter is triggered, which will 
-     * assign dateFilter a value based on the dropdown
-     * 3: Once changeDateFilter runs, it calls filterEventsByDate, which fills the filteredEvents
-     * array with Events based on the value of dateFilter
-     *      1: upcoming events
-     *      2: completed events
-     *      3: all events
-     * 4: filteredEvents is then used to generate event cards
-     * 5: Any time filterEventsByActivity is run, filterEventsByDate must also run
-     * so that both filters are used each time
-     *  
-     */
-
 
     return (
         <div className="container">

@@ -16,8 +16,9 @@ export const EventDetails = () => {
 
     const enableButton = user !== null && user.id === eventObj.userId;
 
+    // carries the id of the EventGroup that the current user has created
+    // with this event, is null otherwise
     let isRSVPd = null
-
 
     eventGroups.filter((eventGroup) => {
         if (eventGroup.userId === user.id) {
@@ -25,8 +26,10 @@ export const EventDetails = () => {
         }
     })
 
+    // checks to see if the event is upcoming or has passed based on the date
     const isCompleted = Date.parse(eventObj.date < Date.now())
 
+    // only the creator of the event has access to the edit and delete buttons
     const buttonForUser = () => {
         return (
             <Button className="b">
@@ -47,12 +50,22 @@ export const EventDetails = () => {
         );
     };
 
-
+    /**  
+     * gets called when the RSVP button is clicked, which is only available if
+    * isCompleted is null. Sends an object representing an event group 
+    * to the provider and refreshes the page so that changes to the RSVP button
+    * and counter in the JSX can immediately take effect
+    */
     const addAnEventGroup = (eventGroupObj) => {
         addEventGroup(eventGroupObj)
             .then(history.go())
     }
-
+    /**
+     * gets called when the Cancel RSVP button is clicked, which is only available
+     * if isCompleted has a value other than null. Sends an event group id to the
+     * provider for deletion and refreshes the page so that changes to the RSVP
+     * button and counter in the JSX can take effect
+     */
     const deleteAnEventGroup = (groupId) => {
         deleteEventGroup(groupId)
             .then(history.go())
@@ -60,12 +73,9 @@ export const EventDetails = () => {
 
     }
 
+    // grab the event and all associated event groups on page load
     useEffect(() => {
         getEventById(parseInt(id))
-        getEventGroupsByEvent(parseInt(id))
-    }, []);
-
-    useEffect(() => {
         getEventGroupsByEvent(parseInt(id))
     }, []);
 

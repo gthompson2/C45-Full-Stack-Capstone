@@ -10,7 +10,7 @@ import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";
 import EventForm from "./Events/EventForm";
 import EventDetails from "./Events/EventDetails";
-import ActivityProvider, { ActivityContext } from "../providers/ActivityProvider";
+import ActivityProvider from "../providers/ActivityProvider";
 import EventGroupProvider from "../providers/EventGroupProvider";
 import EventDelete from "./Events/EventDelete";
 
