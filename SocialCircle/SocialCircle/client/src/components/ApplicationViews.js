@@ -4,7 +4,6 @@ import { UserProfileContext, UserProfileProvider } from "../providers/UserProfil
 import Login from "./Login/Login"
 import Register from "./Login/Register"
 import Hello from "./Hello";
-import "./appViews.css";
 import EventProvider from "../providers/EventProvider";
 import EventList from "./Events/EventList";
 import MyEventList from "./Events/MyEventList";

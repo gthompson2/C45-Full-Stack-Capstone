@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { UserProfileContext } from "./UserProfileProvider";
 
 export const EventGroupContext = React.createContext();
@@ -6,6 +7,7 @@ export const EventGroupContext = React.createContext();
 export const EventGroupProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [eventGroups, setEventGroups] = useState([]);
+    const history = useHistory();
 
     const getEventGroupsByEvent = (id) => {
         return getToken().then((token) =>
@@ -29,7 +31,8 @@ export const EventGroupProvider = (props) => {
                 },
                 body: JSON.stringify(eventGroupObj),
             })
-        )
+        ).then(history.go(-1))
+
     }
 
     const deleteEventGroup = (id) => {
@@ -41,7 +44,7 @@ export const EventGroupProvider = (props) => {
                         Authorization: `Bearer ${token}`,
                     }
                 })
-            )
+            ).then(history.go(-1))
     }
 
     return (

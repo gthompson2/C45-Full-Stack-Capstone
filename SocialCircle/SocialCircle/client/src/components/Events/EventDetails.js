@@ -58,17 +58,17 @@ export const EventDetails = () => {
     */
     const addAnEventGroup = (eventGroupObj) => {
         addEventGroup(eventGroupObj)
-            .then(history.go())
+            .then(getEventGroupsByEvent(parseInt(id)))
     }
     /**
      * gets called when the Cancel RSVP button is clicked, which is only available
      * if isCompleted has a value other than null. Sends an event group id to the
-     * provider for deletion and refreshes the page so that changes to the RSVP
+     * provider for deletion, which then refreshes the previous page so that changes to the RSVP
      * button and counter in the JSX can take effect
      */
     const deleteAnEventGroup = (groupId) => {
         deleteEventGroup(groupId)
-            .then(history.go())
+            .then(getEventGroupsByEvent(parseInt(id)))
 
 
     }

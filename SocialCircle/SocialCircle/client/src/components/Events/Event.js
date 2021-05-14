@@ -42,6 +42,9 @@ export const Event = ({ event }) => {
                 <p>Date: {new Date(event.date).toLocaleDateString('en-US')}</p>
                 <p>Time: {new Date(event.date).toLocaleTimeString('en-US')}</p>
                 <p>Address: {event.address}</p>
+                <section className="d">
+                    <strong>{isCompleted ? `Completed` : ``}</strong>
+                </section>
                 <section className="c">
                     <div>{enableButton ? buttonForUser() : null}</div>
                     <div>{enableButton ? <Button className="b">
@@ -49,9 +52,6 @@ export const Event = ({ event }) => {
                             Delete
                                             </Link>
                     </Button> : null}</div>
-                </section>
-                <section className="d">
-                    <strong>{isCompleted ? `Completed` : ``}</strong>
                 </section>
             </CardBody>
         </Card>
