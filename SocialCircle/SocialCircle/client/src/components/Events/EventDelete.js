@@ -31,8 +31,8 @@ export const EventDelete = () => {
                 <Card className="col-sm-12 col-lg-6">
                     <CardBody>
                         <h3>Are you sure you want to delete the event {eventObj.name} along with all RSVPs?</h3>
-                        <Button className="a" onClick={() => { deletion() }}>Yes</Button>
-                        <Button>
+                        <Button className="a" color="danger" onClick={() => { deletion() }}>Yes</Button>
+                        <Button className="a">
                             <Link className="a" to={`/myEvents/`}>
                                 No
                             </Link>

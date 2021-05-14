@@ -68,7 +68,7 @@ export const EventForm = () => {
 
             // The day portion of date must be in the correct format
         } else if (!(day.includes("/"))) {
-            window.alert("Please enter a valid date in mm/dd/yyyy format,")
+            window.alert("Please enter a valid date in mm/dd/yyyy format.")
         } else if (day.includes("/")) {
             const [month, day2, year] = day.split("/")
 
